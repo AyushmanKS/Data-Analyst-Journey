@@ -1,75 +1,75 @@
-# 📱 Google Play Store Data Cleaning and Preprocessing
+# 📱 Google Play Store Data Cleaning, EDA, and Feature Engineering
 
-This repository contains a complete data cleaning and preprocessing pipeline for the [Google Play Store dataset](https://www.kaggle.com/lava18/google-play-store-apps). The dataset consists of metadata for 10,841 Android applications available on the Google Play Store.
-
-## 📊 Dataset Overview
-
-The dataset includes the following fields:
-
-- App
-- Category
-- Rating
-- Reviews
-- Size
-- Installs
-- Type
-- Price
-- Content Rating
-- Genres
-- Last Updated
-- Current Version
-- Android Version
-
-## 🧹 What This Code Does
-
-This script performs the following major data cleaning and transformation tasks:
+This repository contains a complete data cleaning, exploration, and feature engineering pipeline for the [Google Play Store dataset](https://www.kaggle.com/lava18/google-play-store-apps). The dataset includes metadata for over 10,000 Android applications.
 
 ---
 
-### 🔍 1. Initial Exploration
+## 🗂 Dataset Overview
 
-- Load the dataset using `pandas`.
-- Display general information (`info`) and dataset shape.
-- Identify missing values using `isnull().sum()`.
+The dataset includes the following columns:
 
----
-
-### 🧼 2. Cleaning `Reviews` Column
-
-- Identify non-numeric values in the `Reviews` column.
-- Remove rows with invalid data (like row index `10472`).
-- Convert `Reviews` column to integer (`int`).
-
----
-
-### 🧼 3. Cleaning `Size` Column
-
-- Replace "M" with `000` to convert values like "3.0M" to "3000".
-- Remove "k" from values like "500k".
-- Replace "Varies with device" with `NaN`.
-- Convert `Size` column to float.
+- `App`: Application name
+- `Category`: Category the app belongs to
+- `Rating`: Overall user rating
+- `Reviews`: Number of user reviews
+- `Size`: Size of the app
+- `Installs`: Number of installs
+- `Type`: Free or Paid
+- `Price`: Price of the app
+- `Content Rating`: Age group targeted
+- `Genres`: App genre(s)
+- `Last Updated`: Date when the app was last updated
+- `Current Ver`: Current version of the app
+- `Android Ver`: Minimum Android version required
 
 ---
 
-### 🧼 4. Cleaning `Installs` and `Price`
+## 🔧 Steps Performed
 
-- Remove special characters such as `+`, `,`, and `$`.
-- Convert `Installs` to `int`.
-- Convert `Price` to `float`.
+### 1️⃣ Data Cleaning
+
+Performed comprehensive cleaning on messy and inconsistent data:
+
+- **`Reviews`**: Removed non-numeric entries and converted to integers.
+- **`Size`**: Replaced 'M', 'k', and 'Varies with device', then converted to float (in kilobytes).
+- **`Installs`**: Removed '+' and ',' then converted to integer.
+- **`Price`**: Removed dollar signs and converted to float.
+- **`Last Updated`**: Converted to `datetime`, extracted `day`, `month`, and `year` as separate features.
 
 ---
 
-### 🧼 5. Converting `Last Updated` to DateTime
+### 2️⃣ Exploratory Data Analysis (EDA)
 
-- Parse the `Last Updated` column to datetime format using `pd.to_datetime()`.
-- Extract `Day`, `Month`, and `Year` from the `Last Updated` column for time-based analysis.
+Performed insightful EDA to understand trends, outliers, and correlations:
+
+- **Rating Distribution**: Used histograms and KDE plots to observe how app ratings are distributed.
+- **Category Popularity**: Countplot to show number of apps in each category.
+- **Installs vs Rating**: Analyzed whether higher installs lead to better ratings.
+- **Price Analysis**: Compared paid vs free apps using box plots.
+- **Review Counts**: Visualized distribution of reviews across different app types and categories.
+- **Size vs Installs**: Investigated if app size has any impact on number of installs.
+
+Visualization libraries used:
+- `seaborn`
+- `matplotlib`
 
 ---
 
-## ✅ Final Cleaned DataFrame
+### 3️⃣ Feature Engineering
 
-After cleaning, the dataset contains:
+Created new columns to enhance the dataset and support further analysis/modeling:
 
-- 10,840 entries and 16 columns
-- Proper data types for numerical and datetime columns
-- Missing values identified and partially handled
+- `Last Updated Day`: Day extracted from `Last Updated`
+- `Last Updated Month`: Month extracted from `Last Updated`
+- `Last Updated Year`: Year extracted from `Last Updated`
+- Future scope:
+  - One-hot encoding for `Category`, `Genres`, and `Content Rating`
+  - Grouping genres into broader categories
+  - Generating a binary column for "popular app" based on threshold installs
+
+## 🛠 Libraries Used
+
+- `pandas`
+- `numpy`
+- `matplotlib`
+- `seaborn`
