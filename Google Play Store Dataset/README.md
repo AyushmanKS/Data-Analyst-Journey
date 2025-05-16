@@ -73,8 +73,3 @@ After cleaning, the dataset contains:
 - 10,840 entries and 16 columns
 - Proper data types for numerical and datetime columns
 - Missing values identified and partially handled
-
----
-
-## 📁 Project Structure
-
